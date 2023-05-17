@@ -31,7 +31,7 @@ func TestProductWhenPriceIsRequired(t *testing.T) {
 func TestProductWhenPriceIsNotValid(t *testing.T) {
 	p, err := NewProduct("Product 1", -1)
 	assert.Nil(t, p)
-	assert.Equal(t, ErrPriceIsNotValid, err)
+	assert.Equal(t, ErrPriceIsRequired, err)
 }
 func TestProductValidate(t *testing.T) {
 	p, err := NewProduct("Product 1", 10)

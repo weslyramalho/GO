@@ -29,7 +29,7 @@ func LoadConfig(path string) (*conf, error) {
 	if err != nil {
 		panic(err)
 	}
-	err = viper.Ummarshal(&cfg)
+	err = viper.Unmarshal(&cfg)
 	if err != nil {
 		panic(err)
 	}
