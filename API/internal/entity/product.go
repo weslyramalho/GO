@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	"time"
 
 	"github.com/weslyramalho/GO/tree/main/API/pkg/entity"
 )
@@ -18,14 +19,14 @@ type Product struct {
 	ID        entity.ID `json:"id"`
 	Name      string    `json:"name"`
 	Price     int       `json:"price"`
-	CreatedAt time.Time    `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
-func NewProduct(name string, price int)(*Product, error){
+func NewProduct(name string, price int) (*Product, error) {
 	product := &Product{
-		ID: entity.NewID(),
-		Name: name,
-		Price: price,
+		ID:        entity.NewID(),
+		Name:      name,
+		Price:     price,
 		CreatedAt: time.Now(),
 	}
 	err := product.Validate()
@@ -36,22 +37,21 @@ func NewProduct(name string, price int)(*Product, error){
 }
 
 func (p *Product) Validate() error {
-	if p.ID.String() == ""{
+	if p.ID.String() == "" {
 		return ErrIDIsRequired
 	}
 
-	if err:= entity.ParseID(string(p.ID.String()); err != nil){
-		return ErrIvalidID	
+	if _, err := entity.ParseID(p.ID.String()); err != nil {
+		return ErrIvalidID
 	}
-	if p.Name == ""{
+	if p.Name == "" {
 		return ErrNameIsRequired
 	}
-	if p.Price == 0{
+	if p.Price == 0 {
 		return ErrPriceIsRequired
 	}
-	if p.Price < 0{
+	if p.Price < 0 {
 		return ErrInvalidPrice
 	}
 	return nil
-	}
-
+}
