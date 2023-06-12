@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/jwtauth"
+
 	"github.com/go-chi/chi/middleware"
 	"github.com/weslyramalho/GO/tree/main/API/configs"
 
