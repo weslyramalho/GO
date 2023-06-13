@@ -8,13 +8,29 @@ import (
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/weslyramalho/GO/tree/main/API/configs"
+	"github.com/weslyramalho/GO/tree/main/API/docs"
 
 	"github.com/weslyramalho/GO/tree/main/API/internal/entity"
 	"github.com/weslyramalho/GO/tree/main/API/internal/infra/database"
 	"github.com/weslyramalho/GO/tree/main/API/internal/infra/webserver/handlers"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
+
+// @title Primeira API em Go
+// @version 1.0
+// @description Product API
+// @termsOfService http://swagger.io/terms
+
+// @contact.name Wesly Ramalho
+
+// @host localhost:8000
+// @BasePath /
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 
 func main() {
 	configs, err := configs.LoadConfig(".")
@@ -48,5 +64,6 @@ func main() {
 	r.Post("/users", userHandler.Create)
 	r.Post("/users/login", userHandler.GetJWT)
 
+	r.Get("/docs/*", httpSwagger.Handler(httpSwagger.URL("http://localhost:8000/docs/doc.json")))
 	http.ListenAndServe(":8000", r)
 }
