@@ -3,12 +3,11 @@ package main
 import (
 	"net/http"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/jwtauth"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/jwtauth"
 
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/weslyramalho/GO/tree/main/API/configs"
-	"github.com/weslyramalho/GO/tree/main/API/docs"
 
 	"github.com/weslyramalho/GO/tree/main/API/internal/entity"
 	"github.com/weslyramalho/GO/tree/main/API/internal/infra/database"

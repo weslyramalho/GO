@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/weslyramalho/GO/tree/main/API/internal/dto"
 	"github.com/weslyramalho/GO/tree/main/API/internal/entity"
 	"github.com/weslyramalho/GO/tree/main/API/internal/infra/database"
@@ -21,6 +21,18 @@ func NewProductHandler(db database.ProductInterface) *ProductHandler {
 		ProductDB: db,
 	}
 }
+
+// Create Product godoc
+// @Summary Create product
+// @Description Create products
+// @Tags Products
+// @Accept  json
+// @Produce json
+// @Param request body dto.CreateProductInput true "product request"
+// @Success 201
+// @Failure 500 {object} Error
+// @Router /products [post]
+// @Security ApiKeyAuth
 
 func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var product dto.CreateProductInput
