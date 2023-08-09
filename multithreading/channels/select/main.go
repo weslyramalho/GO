@@ -25,5 +25,8 @@ func main() {
 
 	case <-time.After(time.Second * 3):
 		println("TIMEOUT")
+
+	default:
+		println("DEFAULT")
 	}
 }
