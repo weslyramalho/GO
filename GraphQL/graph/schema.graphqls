@@ -2,10 +2,10 @@ type Category {
   id: ID!
   name: String!
   description: String
-  courses: [Couse!]!
+  courses: [Course!]!
 }
 
-type Couse {
+type Course {
   id: ID!
   name: String!
   description: String
@@ -25,10 +25,10 @@ input NewCourse  {
 
 type Query {
   categories:[Category]!
-  course: [Couse!]!
+  course: [Course!]!
 }
 
 type Mutation {
   createCategory(input: NewCategory!): Category!
-  creatCourse(input: NewCourse!): Course!
+  createCourse(input: NewCourse!): Course!
 }

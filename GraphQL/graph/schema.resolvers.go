@@ -11,14 +11,24 @@ import (
 	"github.com/weslyramalho/GO/GraphQL/graph/model"
 )
 
-// CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
+// CreateCategory is the resolver for the createCategory field.
+func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCategory) (*model.Category, error) {
+	panic(fmt.Errorf("not implemented: CreateCategory - createCategory"))
 }
 
-// Todos is the resolver for the todos field.
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
+// CreateCourse is the resolver for the createCourse field.
+func (r *mutationResolver) CreateCourse(ctx context.Context, input model.NewCourse) (*model.Course, error) {
+	panic(fmt.Errorf("not implemented: CreateCourse - createCourse"))
+}
+
+// Categories is the resolver for the categories field.
+func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, error) {
+	panic(fmt.Errorf("not implemented: Categories - categories"))
+}
+
+// Course is the resolver for the course field.
+func (r *queryResolver) Course(ctx context.Context) ([]*model.Course, error) {
+	panic(fmt.Errorf("not implemented: Course - course"))
 }
 
 // Mutation returns MutationResolver implementation.
