@@ -15,12 +15,13 @@ type TestEvent struct {
 	Payload interface{}
 }
 
-func (e *TestEvent) GetName() string {
-	return e.Name
+// GetPayLoad implements EventInterface.
+func (e *TestEvent) GetPayLoad() interface{} {
+	return e.Payload
 }
 
-func (e *TestEvent) GetPayload() interface{} {
-	return e.Payload
+func (e *TestEvent) GetName() string {
+	return e.Name
 }
 
 func (e *TestEvent) GetDateTime() time.Time {
