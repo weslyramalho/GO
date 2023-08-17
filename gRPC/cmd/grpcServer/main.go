@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"net"
 
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/weslyramalho/GO/tree/main/gRPC/internal/database"
 	"github.com/weslyramalho/GO/tree/main/gRPC/internal/pb"
 	"github.com/weslyramalho/GO/tree/main/gRPC/internal/service"
