@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sync"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -14,15 +15,16 @@ import (
 var (
 	s3Client *s3.S3
 	s3Bucket string
+	wg       sync.WaitGroup
 )
 
 func init() {
 	sess, err := session.NewSession(
 		&aws.Config{
-			Region: aws.String("us-east-1"),
+			Region: aws.String("sa-east-1"),
 			Credentials: credentials.NewStaticCredentials(
-				"---",
-				"---",
+				"",
+				"",
 				"",
 			),
 		},
@@ -31,14 +33,30 @@ func init() {
 		panic(err)
 	}
 	s3Client = s3.New(sess)
-	s3Bucket = "goexpert-bucket-exemplo"
+
+	s3Bucket = "chefeca"
 }
+
 func main() {
 	dir, err := os.Open("./tmp")
 	if err != nil {
 		panic(err)
 	}
 	defer dir.Close()
+	uploadControl := make(chan struct{}, 100)
+	errorFileUpload := make(chan string, 10)
+
+	go func() {
+		for {
+			select {
+			case filename := <-errorFileUpload:
+				uploadControl <- struct{}{}
+				wg.Add(1)
+				go uploadFile(filename, uploadControl, errorFileUpload)
+			}
+		}
+	}()
+
 	for {
 		files, err := dir.ReadDir(1)
 		if err != nil {
@@ -48,17 +66,28 @@ func main() {
 			fmt.Printf("Error reading directory: %s\n", err)
 			continue
 		}
-		uploadFile(files[0].Name())
+		wg.Add(1)
+		uploadControl <- struct{}{}
+		go uploadFile(files[0].Name(), uploadControl, errorFileUpload)
 	}
-
+	wg.Wait()
 }
 
-func uploadFile(filename string) {
+func uploadFile(filename string, uploadControl <-chan struct{}, errorFileUpload chan<- string) {
+	defer wg.Done()
 	completeFileName := fmt.Sprintf("./tmp/%s", filename)
-	fmt.Printf("Uploading file %s to bucket %s", completeFileName, s3Bucket)
+	fmt.Printf("Uploading file %s to bucket %s\n", completeFileName, s3Bucket)
 	f, err := os.Open(completeFileName)
 	if err != nil {
 		fmt.Printf("Error opening file %s\n", completeFileName)
+		<-uploadControl // esvazia o canal
+
+		errorFileUpload <- filename
+
+		errorFileUpload <- completeFileName
+
+		errorFileUpload <- filename
+
 		return
 	}
 	defer f.Close()
@@ -67,9 +96,18 @@ func uploadFile(filename string) {
 		Key:    aws.String(filename),
 		Body:   f,
 	})
-	if err == nil {
+	if err != nil {
 		fmt.Printf("Error uploading file %s\n", completeFileName)
+		<-uploadControl // esvazia o canal
+
+		errorFileUpload <- filename
+
+		errorFileUpload <- completeFileName
+
+		errorFileUpload <- filename
+
 		return
 	}
-	fmt.Println("File %s uploaded sucessfully\n", completeFileName)
+	fmt.Printf("File %s uploaded successfully\n", completeFileName)
+	<-uploadControl // esvazia o canal
 }
