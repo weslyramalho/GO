@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -23,7 +22,17 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("create called")
 	},
+	PreRun: func(cmd *cobra.Command, args []string) {
+		fmt.Println("chamado antes do run")
+	},
+	PostRun: func(cmd *cobra.Command, args []string) {
+		fmt.Println("chamado depois do run")
+	},
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return fmt.Errorf("ocorre erro")
+	},
 }
+var category string
 
 func init() {
 	categoryCmd.AddCommand(createCmd)
