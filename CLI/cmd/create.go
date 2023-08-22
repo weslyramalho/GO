@@ -4,53 +4,37 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/weslyramalho/GO/cli/internal/database"
 )
 
-// createCmd represents the create command
-var createCmd = &cobra.Command{
-	Use:   "create",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		db : = GetGetDb()
-		category := GetGetCategoryDB(db)
-
-		name, _:=cmd.Flags().GetString("name")
-		description, _ := cmd.Flags().GetString("description")
-
-		category.Create(name, description)
-		cmd.Help()
-	},
-
-	/*
-	PreRun: func(cmd *cobra.Command, args []string) {
-		fmt.Println("chamado antes do run")
-	},
-	PostRun: func(cmd *cobra.Command, args []string) {
-		fmt.Println("chamado depois do run")
-	},
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return fmt.Errorf("ocorre erro")
-	},
+func newCreateCmd(categoryDb database.Category) *cobra.Command {
+	return &cobra.Command{
+		Use:   "create",
+		Short: "Creates a new category",
+		Long:  `Create a new category`,
+		RunE:  runCreate(categoryDb),
+	}
 }
-var category string
-*/
+
+func runCreate(categoryDb database.Category) RunEFunc {
+	return func(cmd *cobra.Command, args []string) error {
+		name, _ := cmd.Flags().GetString("name")
+		description, _ := cmd.Flags().GetString("description")
+		_, err := categoryDb.Create(name, description)
+		if err != nil {
+			panic(err)
+		}
+		return nil
+	}
 }
 func init() {
+	createCmd := newCreateCmd(GetCategoryDB(GetDb()))
 	categoryCmd.AddCommand(createCmd)
 	createCmd.Flags().StringP("name", "n", "", "Name of the category")
 	createCmd.Flags().StringP("description", "d", "", "Description of the category")
 	createCmd.MarkFlagRequired("name")
 	createCmd.MarkFlagRequired("description")
-
 
 	// Here you will define your flags and configuration settings.
 
