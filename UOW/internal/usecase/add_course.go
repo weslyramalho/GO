@@ -2,6 +2,9 @@ package usecase
 
 import (
 	"context"
+
+	"github.com/weslyramalho/GO/tree/main/UOW/internal/entity"
+	"github.com/weslyramalho/GO/tree/main/UOW/internal/repository"
 )
 
 type InputUseCase struct {

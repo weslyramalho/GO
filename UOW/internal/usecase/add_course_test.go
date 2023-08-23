@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/weslyramalho/GO/tree/main/UOW/internal/repository"
 
 	_ "github.com/go-sql-driver/mysql"
 )
