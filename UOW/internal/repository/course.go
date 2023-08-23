@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 
+	"github.com/weslyramalho/GO/tree/main/UOW/internal/db"
 	"github.com/weslyramalho/GO/tree/main/UOW/internal/entity"
 )
 
