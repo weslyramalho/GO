@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/entity"
+	"github.com/weslyramalho/GO/tree/main/clean_arch/pkg/events"
 )
 
 type OrderInputDTO struct {
@@ -37,7 +38,7 @@ func NewCreateOrderUserCase(
 
 func (c *CreateOrderUseCase) Execute(input OrderInputDTO) (OrderOutputDTO, error) {
 	order := entity.Order{
-		Id:    input.ID,
+		ID:    input.ID,
 		Price: input.Price,
 		Tax:   input.Tax,
 	}

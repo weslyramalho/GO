@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/streadway/amqp"
+	"github.com/weslyramalho/GO/tree/main/clean_arch/pkg/events"
 )
 
 type OrderCreatedHandler struct {
