@@ -49,8 +49,10 @@ func (c *CreateOrderUseCase) Execute(input OrderInputDTO) (OrderOutputDTO, error
 		ID:         order.ID,
 		Price:      order.Price,
 		Tax:        input.Tax,
-		FinalPrice: order.Price + order.Tax,
+		FinalPrice: order.FinalPrice,
 	}
 	c.OrderCreated.SetPayload(dto)
+	c.EventDispatcher.Dispatch(c.OrderCreated)
+	return dto, nil
 
 }
