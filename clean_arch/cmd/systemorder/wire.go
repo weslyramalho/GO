@@ -11,6 +11,7 @@ import (
 	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/event"
 	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/infra/database"
 	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/infra/web"
+	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/usecase"
 	"github.com/weslyramalho/GO/tree/main/clean_arch/pkg/events"
 )
 
@@ -35,7 +36,7 @@ func NewCreateOrderUseCase(db *sql.DB, eventDispatcher events.EventDispatcherInt
 	wire.Build(
 		setOrderRepositoryDependency,
 		setOrderCreatedEvent,
-		usecase.NewCreateOrderUseCase,
+		usecase.NewCreateOrderUserCase,
 	)
 	return &usecase.CreateOrderUseCase{}
 }
