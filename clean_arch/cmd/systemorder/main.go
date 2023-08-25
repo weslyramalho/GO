@@ -10,6 +10,9 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/weslyramalho/GO/tree/main/clean_arch/configs"
 	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/event/handler"
+	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/infra/graph"
+	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/infra/grpc/pb"
+	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/infra/grpc/service"
 	"github.com/weslyramalho/GO/tree/main/clean_arch/internal/infra/web/webserver"
 	"github.com/weslyramalho/GO/tree/main/clean_arch/pkg/events"
 
